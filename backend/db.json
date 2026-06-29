@@ -1,0 +1,196 @@
+{
+  "users": [
+    {
+      "id": "admin-id-1",
+      "username": "admin",
+      "password": "admin123",
+      "role": "admin",
+      "name": "Hostel Owner (Warden)"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "room-101",
+      "number": "101",
+      "type": "Single Sharing",
+      "rent": 8000,
+      "capacity": 1,
+      "currentOccupancy": 0
+    },
+    {
+      "id": "room-102",
+      "number": "102",
+      "type": "Double Sharing",
+      "rent": 6000,
+      "capacity": 2,
+      "currentOccupancy": 1
+    },
+    {
+      "id": "room-103",
+      "number": "103",
+      "type": "Triple Sharing",
+      "rent": 4500,
+      "capacity": 3,
+      "currentOccupancy": 0
+    },
+    {
+      "id": "room-104",
+      "number": "104",
+      "type": "Double Sharing",
+      "rent": 6000,
+      "capacity": 2,
+      "currentOccupancy": 2
+    }
+  ],
+  "tenants": [
+    {
+      "id": "tenant-id-1",
+      "name": "Rahul Sharma",
+      "phone": "9876543210",
+      "email": "rahul@example.com",
+      "emergencyContact": "9876543211",
+      "roomId": "checked-out",
+      "roomNumber": "None",
+      "joinDate": "2026-05-10",
+      "rentPlan": "Monthly",
+      "rentAmount": 8000,
+      "rentStatus": "Unpaid",
+      "dueDate": "2026-07-10",
+      "username": "rahul",
+      "status": "Inactive"
+    },
+    {
+      "id": "tenant-id-2",
+      "name": "Priya Patel",
+      "phone": "9123456780",
+      "email": "priya@example.com",
+      "emergencyContact": "9123456781",
+      "roomId": "room-102",
+      "roomNumber": "102",
+      "joinDate": "2026-06-01",
+      "rentPlan": "6-Months",
+      "rentAmount": 36000,
+      "rentStatus": "Paid",
+      "dueDate": "2026-12-01",
+      "username": "priya",
+      "status": "Active"
+    }
+  ],
+  "payments": [
+    {
+      "id": "pay-1",
+      "tenantId": "tenant-id-2",
+      "tenantName": "Priya Patel",
+      "amount": 36000,
+      "date": "2026-06-01",
+      "mode": "UPI",
+      "plan": "6-Months",
+      "transactionId": "TXN891273912",
+      "monthYear": "June 2026"
+    }
+  ],
+  "grievances": [
+    {
+      "id": "g-1",
+      "tenantId": "tenant-id-1",
+      "tenantName": "Rahul Sharma",
+      "roomNumber": "101",
+      "category": "WiFi Down",
+      "description": "WiFi signal is extremely weak in room 101, cannot connect to work.",
+      "status": "Resolved",
+      "createdAt": "2026-06-28T10:00:00.000Z"
+    },
+    {
+      "id": "g-2",
+      "tenantId": "tenant-id-2",
+      "tenantName": "Priya Patel",
+      "roomNumber": "102",
+      "category": "Washing Machine",
+      "description": "First floor washing machine is not spinning.",
+      "status": "Resolved",
+      "createdAt": "2026-06-27T14:30:00.000Z"
+    }
+  ],
+  "emergencyAlerts": [
+    {
+      "id": "y5uky5crs-mqxz5dbb",
+      "tenantName": "Rahul Sharma",
+      "roomNumber": "101",
+      "phone": "9876543210",
+      "message": "🚨 CRITICAL MEDICAL EMERGENCY: Requesting immediate warden assistance at room 101! 🚨",
+      "status": "Resolved"
+    }
+  ],
+  "menus": {
+    "Monday": {
+      "breakfast": "Idli, Sambar, Chutney",
+      "lunch": "Rice, Dal, Veg Fry, Curd",
+      "dinner": "Roti, Paneer Masala, Rice, Dal"
+    },
+    "Tuesday": {
+      "breakfast": "Poha, Sev, Tea",
+      "lunch": "Rajma, Rice, Salad, Pickle",
+      "dinner": "Roti, Aloo Gobi, Rice, Kadhi"
+    },
+    "Wednesday": {
+      "breakfast": "Aloo Paratha, Curd",
+      "lunch": "Rice, Sambhar, Papad, Poriyal",
+      "dinner": "Roti, Egg Curry / Paneer Bhurji, Rice"
+    },
+    "Thursday": {
+      "breakfast": "Upma, Coconut Chutney",
+      "lunch": "Kadi Chawal, Aloo Jeera",
+      "dinner": "Roti, Mix Veg Sabzi, Rice, Dal"
+    },
+    "Friday": {
+      "breakfast": "Bread Toast, Omelette / Butter",
+      "lunch": "Chole Bhature, Veg Pulao",
+      "dinner": "Roti, Bhindi Masala, Rice, Dal"
+    },
+    "Saturday": {
+      "breakfast": "Puri Sabji, Halwa",
+      "lunch": "Veg Biryani, Raita",
+      "dinner": "Roti, Egg Bhurji / Veg Korma, Rice"
+    },
+    "Sunday": {
+      "breakfast": "Masala Dosa, Filter Coffee",
+      "lunch": "Special Meals (Rice, Chicken Curry / Paneer Butter Masala, Sweet)",
+      "dinner": "Roti, Dal Tadka, Rice"
+    }
+  },
+  "attendances": [
+    {
+      "id": "att-1",
+      "tenantId": "tenant-id-1",
+      "tenantName": "Rahul Sharma",
+      "roomNumber": "101",
+      "date": "2026-06-28",
+      "breakfast": true,
+      "lunch": false,
+      "dinner": true
+    },
+    {
+      "id": "att-2",
+      "tenantId": "tenant-id-2",
+      "tenantName": "Priya Patel",
+      "roomNumber": "102",
+      "date": "2026-06-28",
+      "breakfast": true,
+      "lunch": true,
+      "dinner": true
+    }
+  ],
+  "feedbacks": [
+    {
+      "id": "fb-1",
+      "tenantName": "Priya Patel",
+      "roomNumber": "102",
+      "foodRating": 4,
+      "wifiRating": 5,
+      "cleanlinessRating": 4,
+      "overallRating": 4,
+      "comments": "The food is generally good, but sometimes spicy. WiFi speed is great.",
+      "submittedDate": "2026-06-25T12:00:00.000Z"
+    }
+  ]
+}
