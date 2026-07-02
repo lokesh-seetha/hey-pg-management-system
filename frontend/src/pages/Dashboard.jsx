@@ -3,6 +3,7 @@ import { apiCall } from "../utils/api";
 import AdminDashboardContent from "../components/AdminDashboardContent";
 import TenantDashboardContent from "../components/TenantDashboardContent";
 import RoomService from "../services/roomService";
+import { getAllTenants, getMyProfile } from "../services/TenantService";
 
 const defaultFoodSummary = {
   total: 0,
@@ -52,15 +53,11 @@ export default function Dashboard({ currentUser, onNavigate }) {
       let activeTenants = [];
 
       if (currentUser.role === "admin") {
-        const tenantsRes = await apiCall("http://localhost:5000/api/tenants");
-
-        const tenants = await tenantsRes.json();
+        const tenants = await getAllTenants();
 
         activeTenants = tenants.filter((t) => t.status === "Active");
       } else {
-        const tenantRes = await apiCall("http://localhost:5000/api/tenants/me");
-
-        const tenant = await tenantRes.json();
+        const tenant = await getMyProfile();
 
         setTenantProfile(tenant);
       }
