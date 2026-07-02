@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { apiCall } from "../utils/api";
+import AdminDashboardContent from "../components/AdminDashboardContent";
+import TenantDashboardContent from "../components/TenantDashboardContent";
+import RoomService from "../services/roomService";
 
 const defaultFoodSummary = {
   total: 0,
@@ -43,13 +46,24 @@ export default function Dashboard({ currentUser, onNavigate }) {
   const fetchDashboardData = async () => {
     try {
       // 1. Fetch Rooms
-      const roomsRes = await apiCall("http://localhost:5000/api/rooms");
-      const rooms = await roomsRes.json();
+      const rooms = await RoomService.getAllRooms();
 
       // 2. Fetch Tenants
-      const tenantsRes = await apiCall("http://localhost:5000/api/tenants");
-      const tenants = await tenantsRes.json();
-      const activeTenants = tenants.filter((t) => t.status === "Active");
+      let activeTenants = [];
+
+      if (currentUser.role === "admin") {
+        const tenantsRes = await apiCall("http://localhost:5000/api/tenants");
+
+        const tenants = await tenantsRes.json();
+
+        activeTenants = tenants.filter((t) => t.status === "Active");
+      } else {
+        const tenantRes = await apiCall("http://localhost:5000/api/tenants/me");
+
+        const tenant = await tenantRes.json();
+
+        setTenantProfile(tenant);
+      }
 
       // 3. Fetch Payments
       const payRes = await apiCall("http://localhost:5000/api/payments");
@@ -91,44 +105,41 @@ export default function Dashboard({ currentUser, onNavigate }) {
         },
       );
 
-      // Compute statistics
-      let unpaidCount = 0;
-      let paidCount = 0;
-      let revCollected = 0;
-      let revPending = 0;
+      if (currentUser.role === "admin") {
+        // Compute statistics
+        let unpaidCount = 0;
+        let paidCount = 0;
+        let revCollected = 0;
+        let revPending = 0;
 
-      activeTenants.forEach((tenant) => {
-        if (tenant.rentStatus === "Unpaid") {
-          unpaidCount++;
-          revPending += tenant.rentAmount;
-        } else {
-          paidCount++;
-          revCollected += tenant.rentAmount;
-        }
-      });
+        activeTenants.forEach((tenant) => {
+          if (tenant.rentStatus === "Unpaid") {
+            unpaidCount++;
+            revPending += tenant.rentAmount;
+          } else {
+            paidCount++;
+            revCollected += tenant.rentAmount;
+          }
+        });
 
-      setStats({
-        totalTenants: activeTenants.length,
-        occupiedRooms: rooms.filter((r) => r.currentOccupancy > 0).length,
-        totalRooms: rooms.length,
-        unpaidTenantsCount: unpaidCount,
-        paidTenantsCount: paidCount,
-        totalRevenueCollected: revCollected,
-        totalRevenuePending: revPending,
-      });
-
+        setStats({
+          totalTenants: activeTenants.length,
+          occupiedRooms: rooms.filter((r) => r.currentOccupancy > 0).length,
+          totalRooms: rooms.length,
+          unpaidTenantsCount: unpaidCount,
+          paidTenantsCount: paidCount,
+          totalRevenueCollected: revCollected,
+          totalRevenuePending: revPending,
+        });
+      }
       // If logged in as tenant, load tenant specific data
-      if (currentUser.role === "tenant" && currentUser.tenantId) {
-        const myProfile = activeTenants.find(
-          (t) => t.id === currentUser.tenantId,
-        );
-        setTenantProfile(myProfile || null);
-
-        // Fetch tenant's attendance toggle state for today
+      if (currentUser.role === "tenant") {
         const myAttRes = await apiCall(
           `http://localhost:5000/api/attendance/tenant/${currentUser.tenantId}`,
         );
+
         const myAtt = await myAttRes.json();
+
         setTenantAttendance({
           breakfast: myAtt.breakfast !== false,
           lunch: myAtt.lunch !== false,
