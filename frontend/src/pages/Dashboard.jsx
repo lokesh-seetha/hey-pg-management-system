@@ -4,6 +4,7 @@ import AdminDashboardContent from "../components/AdminDashboardContent";
 import TenantDashboardContent from "../components/TenantDashboardContent";
 import RoomService from "../services/roomService";
 import { getAllTenants, getMyProfile } from "../services/TenantService";
+import { getPayments } from "../services/paymentService";
 
 const defaultFoodSummary = {
   total: 0,
@@ -63,8 +64,7 @@ export default function Dashboard({ currentUser, onNavigate }) {
       }
 
       // 3. Fetch Payments
-      const payRes = await apiCall("http://localhost:5000/api/payments");
-      const payments = await payRes.json();
+      const payments = await getPayments();
       setRecentPayments(payments.slice(0, 4));
 
       // 4. Fetch Grievances
